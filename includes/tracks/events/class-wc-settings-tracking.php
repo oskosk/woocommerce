@@ -35,7 +35,7 @@ class WC_Settings_Tracking {
 	/**
 	 * Instantiate the singleton.
 	 *
-	 * @return WC_Settings_Tracking
+	 * @return WC_Settings_Tracking Singleton instance.
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -97,8 +97,11 @@ class WC_Settings_Tracking {
 		// Check to make sure the new value is truly different.
 		// `woocommerce_price_num_decimals` tends to trigger this
 		// because form values aren't coerced (e.g. '2' vs. 2).
-		// phpcs:ignore WordPress.PHP.StrictComparisons
-		if ( $old_value == $new_value ) {
+		if (
+			is_scalar( $old_value ) &&
+			is_scalar( $new_value ) &&
+			(string) $old_value === (string) $new_value
+		) {
 			return;
 		}
 
