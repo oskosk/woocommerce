@@ -20,6 +20,10 @@ class WC_Admin_Setup_Wizard_Tracking {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
+		if ( ! isset( $_GET['step'] ) ) {
+			add_action( 'admin_init', array( __CLASS__, 'track_start' ), 1 );
+		}
+
 		$current_step = isset( $_GET['step'] ) ? sanitize_key( $_GET['step'] ) : '';
 		if ( ! empty( $_POST['save_step'] ) ) {
 			switch ( $current_step ) {
@@ -48,5 +52,14 @@ class WC_Admin_Setup_Wizard_Tracking {
 		// phpcs:enable
 
 		WC_Tracks::record_event( 'obw_store_setup', $properties );
+	}
+
+	/**
+	 * Track when the OBW has started.
+	 *
+	 * @return void
+	 */
+	public static function track_start() {
+		WC_Tracks::record_event( 'obw_start' );
 	}
 }
