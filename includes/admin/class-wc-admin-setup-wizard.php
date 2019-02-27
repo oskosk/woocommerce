@@ -731,7 +731,7 @@ class WC_Admin_Setup_Wizard {
 				'slug' => 'woocommerce-services',
 			);
 		}
-		if ( ! is_plugin_active( 'jetpack/jetpack.php' ) && ! get_option( 'woocommerce_setup_background_installing_jetpack' ) ) {
+		if ( ! class_exists( 'Jetpack' ) && ! get_option( 'woocommerce_setup_background_installing_jetpack' ) ) {
 			$plugins[] = array(
 				'name' => __( 'Jetpack', 'woocommerce' ),
 				'slug' => 'jetpack',
